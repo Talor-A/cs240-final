@@ -5,7 +5,7 @@ import java.util.Random;
 
  * Point of Sale Class
  */
-public class POS {
+public class Restaurant {
   Queue<Integer> customerQueue;
   private int shipmentArrivalDate;
   private List[] menu;
@@ -17,7 +17,7 @@ public class POS {
   Stack<Integer> onion;
   Stack<Integer> cheese;
 
-  POS() {
+  Restaurant() {
     customerQueue = new Queue<Integer>();
     shipmentArrivalDate = -1;
     this.rng = new Random();
@@ -169,18 +169,20 @@ public class POS {
 
     }
     //------------------------------------------  DISPOSE OF WASTE
-    // Stack[] inventory = new Stack[] { this.patty, this.bun, this.lettuce, this.tomato, this.onion, this.cheese };
-    // for (int i = 0; i < inventory.length; i++) {
-    //   boolean stop = false;
-    //   Stack itemStack = inventory[i];
+    Stack[] inventory = new Stack[] { this.patty, this.bun, this.lettuce, this.tomato, this.onion, this.cheese };
+    for (int i = 0; i < inventory.length; i++) {
+      boolean stop = false;
+      Stack itemStack = inventory[i];
 
-    //   while (!itemStack.isEmpty() && !stop) {
-    //     if ((int) itemStack.peek() < todaysDate) {
-    //       itemStack.pop();
-    //       wasteItems[i] = wasteItems[i] + 1;
-    //     }
-    //   }
-    // }
+      while (!itemStack.isEmpty() && !stop) {
+        if ((int) itemStack.peek() < todaysDate) {
+          itemStack.pop();
+          wasteItems[i] = wasteItems[i] + 1;
+        } else {
+          stop = true;
+        }
+      }
+    }
 
     System.out.println("Lost Customers today: " + lostCustomerDay);
     for (int i = 0; i < wasteItems.length; i++) {
