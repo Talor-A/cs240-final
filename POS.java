@@ -44,38 +44,38 @@ public class POS {
     menu[4] = cheeseBurgerNoOnion;
     menu[5] = burgerNoTomato;
 
+    burger.add(lettuce);
     burger.add(bun);
     burger.add(patty);
-    burger.add(lettuce);
     burger.add(tomato);
     burger.add(onion);
 
-    cheeseBurger.add(bun);
-    cheeseBurger.add(patty);
-    cheeseBurger.add(lettuce);
-    cheeseBurger.add(tomato);
     cheeseBurger.add(onion);
     cheeseBurger.add(cheese);
+    cheeseBurger.add(lettuce);
+    cheeseBurger.add(tomato);
+    cheeseBurger.add(patty);
+    cheeseBurger.add(bun);
 
     vegan.add(lettuce);
     vegan.add(lettuce);
     vegan.add(tomato);
     vegan.add(onion);
 
-    burgerNoOnion.add(bun);
-    burgerNoOnion.add(patty);
     burgerNoOnion.add(lettuce);
+    burgerNoOnion.add(patty);
     burgerNoOnion.add(tomato);
+    burgerNoOnion.add(bun);
 
+    cheeseBurgerNoOnion.add(cheese);
     cheeseBurgerNoOnion.add(bun);
-    cheeseBurgerNoOnion.add(patty);
     cheeseBurgerNoOnion.add(lettuce);
     cheeseBurgerNoOnion.add(tomato);
-    cheeseBurgerNoOnion.add(cheese);
+    cheeseBurgerNoOnion.add(patty);
 
-    burgerNoTomato.add(bun);
     burgerNoTomato.add(patty);
     burgerNoTomato.add(lettuce);
+    burgerNoTomato.add(bun);
     burgerNoTomato.add(onion);
 
   }
@@ -95,6 +95,8 @@ public class POS {
       this.shipmentArrivalDate = calcNextShipmentDate(todaysDate);
     }
 
+    int caughtA = 0;
+    int caughtB = 0;
     //------------------------------------------  HOURLY OPERATION
     for (int hour = 0; hour < 10; hour++) {
 
@@ -132,20 +134,23 @@ public class POS {
         //   }
         // }
         // Check for empty
-        // while (!outOfIngredients && i < menuItem.getLength()) {
-        //   Stack ingredientStack = (Stack) menuItem.getEntry(i);
-        //   if (ingredientStack.isEmpty()) {
-        //     outOfIngredients = true;
-        //   }
-        //   i++;
-        // }
-        // i = 0;
+        while (!outOfIngredients && i < menuItem.getLength()) {
+          Stack ingredientStack = (Stack) menuItem.getEntry(i);
+          if (ingredientStack.isEmpty()) {
+            outOfIngredients = true;
+            caughtA++;
+            break;
+          }
+          i++;
+        }
+        i = 0;
         //remove
         while (!outOfIngredients && i < menuItem.getLength()) {
           Stack ingredientStack = (Stack) menuItem.getEntry(i);
           if (ingredientStack.isEmpty()) {
             // System.out.println("err!");
             outOfIngredients = true;
+            caughtB++;
             break;
           }
           ingredientStack.pop();
@@ -188,7 +193,8 @@ public class POS {
 
     Iterator keyIter = customerDictionary.getKeyIterator();
     Iterator valIter = customerDictionary.getValueIterator();
-    System.out.println("Customer Dictionary: " + customerDictionary.getSize() + " customers "+customerDictionary.list.getLength());
+    System.out.println("Caught A: " + caughtA + ", caught B: " + caughtB);
+    System.out.println("Customer Dictionary: " + customerDictionary.getSize() + " customers ");
 
     while (valIter.hasNext()) {
 
